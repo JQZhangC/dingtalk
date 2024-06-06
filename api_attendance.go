@@ -17,11 +17,10 @@
 package dingtalk
 
 import (
-	"net/http"
-
 	"github.com/zhaoyunxing92/dingtalk/v2/constant"
 	"github.com/zhaoyunxing92/dingtalk/v2/request"
 	"github.com/zhaoyunxing92/dingtalk/v2/response"
+	"net/http"
 )
 
 // GetAttendanceGroups 批量获取考勤组详情
@@ -59,4 +58,78 @@ func (ding *DingTalk) SearchAttendanceGroup(userId, groupName string) (rsp respo
 // CreateAttendanceGroup 创建考勤组
 func (ding *DingTalk) CreateAttendanceGroup(res *request.CreateAttendanceGroup) (rsp response.CreateAttendanceGroup, err error) {
 	return rsp, ding.Request(http.MethodPost, constant.CreateAttendanceGroupKey, nil, res, &rsp)
+}
+
+// TODO
+// UpdateAttendanceGroup 更新考勤组
+func (ding *DingTalk) UpdateAttendanceGroup(res *request.UpdateAttendanceGroup) (rsp response.UpdateAttendanceGroup, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.UpdateAttendanceGroupKey, nil, res, &rsp)
+}
+
+// DeleteAttendanceGroup 删除考勤组
+func (ding *DingTalk) DeleteAttendanceGroup(userId, groupKey string) (rsp response.DeleteAttendanceGroup, err error) {
+	res := request.NewDeleteAttendanceGroup(userId, groupKey)
+	return rsp, ding.Request(http.MethodPost, constant.DeleteAttendanceGroupKey, nil, res, &rsp)
+}
+
+// IdToKeyAttendanceGroup groupId转换为groupKey
+func (ding *DingTalk) IdToKeyAttendanceGroup(userId string, group_id int64) (rsp response.IdToKeyAttendanceGroup, err error) {
+	res := request.NewIdToKeyAttendanceGroup(userId, group_id)
+	return rsp, ding.Request(http.MethodPost, constant.IdToKeyAttendanceGroupKey, nil, res, &rsp)
+}
+
+// CreateAttendanceShift 创建班次
+func (ding *DingTalk) CreateAttendanceShift(res *request.CreateAttendanceShift) (rsp response.CreateAttendanceShift, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.CreateAttendanceShiftKey, nil, res, &rsp)
+}
+
+// DeleteAttendanceShift 删除班次
+func (ding *DingTalk) DeleteAttendanceShift(userId string, shiftId int64) (rsp response.Response, err error) {
+	res := request.NewDeleteAttendanceShift(userId, shiftId)
+	return rsp, ding.Request(http.MethodPost, constant.DeleteAttendanceShiftKey, nil, res, &rsp)
+}
+
+// // UpdateAttendanceShiftPunches 修改打卡时段设置
+func (ding *DingTalk) UpdateAttendanceShiftPunches(res *request.UpdateAttendanceShiftPunches) (rsp response.Response, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.UpdateAttendanceShiftPunchesKey, nil, res, &rsp)
+}
+
+// GetAttendanceShiftList 获取班次摘要信息
+func (ding *DingTalk) GetAttendanceShiftList(userId string, cursor int64) (rsp response.GetAttendanceShiftList, err error) {
+	res := request.NewGetAttendanceShiftList(userId, cursor)
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceShiftListKey, nil, res, &rsp)
+}
+
+// GetAttendanceShiftDetail 获取班次详情
+func (ding *DingTalk) GetAttendanceShiftDetail(userId string, shiftId int64) (rsp response.GetAttendanceShiftDetail, err error) {
+	res := request.NewGetAttendanceShiftDetail(userId, shiftId)
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceShiftDetailKey, nil, res, &rsp)
+}
+
+// GetAttendanceScheduleList 查询成员排班信息
+func (ding *DingTalk) GetAttendanceScheduleList(opUserId, userId string, dateTime int64) (rsp response.GetAttendanceScheduleList, err error) {
+	res := request.NewGetAttendanceScheduleList(opUserId, userId, dateTime)
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceScheduleDayListKey, nil, res, &rsp)
+}
+
+// GetAttendanceScheduleUsersList 批量查询人员排班信息
+func (ding *DingTalk) GetAttendanceScheduleUsersList(opUserId, userIds string, fromDateTime, toDateTime int64) (rsp response.GetAttendanceScheduleUsersList, err error) {
+	res := request.NewGetAttendanceScheduleShift(opUserId, userIds, fromDateTime, toDateTime)
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceScheduleUsersListKey, nil, res, &rsp)
+}
+
+// UpdateAttendanceSchedule 排班制考勤组排班
+func (ding *DingTalk) UpdateAttendanceSchedule(res *request.UpdateAttendanceSchedule) (rsp response.Response, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.UpdateAttendanceScheduleKey, nil, res, &rsp)
+}
+
+// GetAttendanceScheduleShift 批量查询成员排班概要信息
+func (ding *DingTalk) GetAttendanceScheduleShift(res *request.GetAttendanceScheduleShift) (rsp response.GetAttendanceScheduleShift, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceScheduleShiftKey, nil, res, &rsp)
+}
+
+// GetAttendanceListSchedule 查询企业考勤排班详情
+func (ding *DingTalk) GetAttendanceListSchedule(workDate string, offset, size int) (rsp response.GetAttendanceListSchedule, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceListScheduleKey, nil,
+		request.GetAttendanceListSchedule{workDate, offset, size}, &rsp)
 }

@@ -1,0 +1,3 @@
+package response
+
+type UpdateAttendanceGroup CreateAttendanceGroup

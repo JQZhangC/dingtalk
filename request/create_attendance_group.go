@@ -58,7 +58,7 @@ type AttendanceGroup struct {
 	EnableNextDay *bool `json:"enable_next_day,omitempty"`
 
 	// 班次相关配置信息
-	AttendanceShifts []AttendanceShift `json:"shift_vo_list,omitempty"`
+	AttendanceShifts []AttendanceShiftToList `json:"shift_vo_list,omitempty"`
 
 	//休息日打卡是否需审批：
 	//
@@ -193,7 +193,7 @@ type AttendancePosition struct {
 	CorpId string `json:"corp_id,omitempty"`
 }
 
-type AttendanceShift struct {
+type AttendanceShiftToList struct {
 
 	// 班次ID，可通过获取班次摘要信息接口获取。
 	Id int `json:"id"`
@@ -411,7 +411,7 @@ func (b *CreateAttendanceGroupBuilder) SetOwner(owner string) *CreateAttendanceG
 
 func (b *CreateAttendanceGroupBuilder) SetAttendanceShifts(classId int) *CreateAttendanceGroupBuilder {
 	shifts := b.group.AttendanceGroup.AttendanceShifts
-	b.group.AttendanceGroup.AttendanceShifts = append(shifts, AttendanceShift{classId})
+	b.group.AttendanceGroup.AttendanceShifts = append(shifts, AttendanceShiftToList{classId})
 	return b
 }
 

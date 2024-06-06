@@ -175,4 +175,19 @@ const (
 	GetAttendanceGroupDetailKey     = "/topapi/attendance/group/query"           // 获取考勤组详情
 	SearchAttendanceGroupKey        = "/topapi/attendance/group/search"          // 搜索考勤组摘要
 	CreateAttendanceGroupKey        = "/topapi/attendance/group/add"             // 创建考勤组
+	UpdateAttendanceGroupKey        = "/topapi/attendance/group/modify"          // 修改考勤组
+	DeleteAttendanceGroupKey        = "/topapi/attendance/group/delete"          // 删除考勤组
+	IdToKeyAttendanceGroupKey       = "/topapi/attendance/groups/idtokey"        // groupId转换为groupKey
+
+	CreateAttendanceShiftKey        = "/topapi/attendance/shift/add"           // 创建班次
+	DeleteAttendanceShiftKey        = "/topapi/attendance/shift/delete"        // 删除班次
+	UpdateAttendanceShiftPunchesKey = "/topapi/attendance/shift/updatepunches" // 修改打卡时段设置
+	GetAttendanceShiftListKey       = "/topapi/attendance/shift/list"          // 获取班次摘要信息
+	GetAttendanceShiftDetailKey     = "/topapi/attendance/shift/query"         // 获取班次详情
+
+	GetAttendanceListScheduleKey      = "/topapi/attendance/listschedule"              // 查询企业考勤排班详情
+	GetAttendanceScheduleDayListKey   = "/topapi/attendance/schedule/listbyday"        // 查询成员排班信息
+	GetAttendanceScheduleUsersListKey = "/topapi/attendance/schedule/listbyusers"      // 批量查询人员排班信息
+	UpdateAttendanceScheduleKey       = "/topapi/attendance/group/schedule/async"      // 排班制考勤组排班
+	GetAttendanceScheduleShiftKey     = "/topapi/attendance/schedule/shift/listbydays" // 批量查询成员排班概要信息
 )

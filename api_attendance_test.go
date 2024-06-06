@@ -18,6 +18,7 @@ package dingtalk
 
 import (
 	"encoding/json"
+	"fmt"
 	"testing"
 
 	"github.com/zhaoyunxing92/dingtalk/v2/constant/attendance"
@@ -207,7 +208,7 @@ func TestDingTalk_SearchAttendanceGroup(t *testing.T) {
 }
 
 func TestDingTalk_CreateAttendanceGroup_TURN(t *testing.T) {
-	t.Skip()
+	//t.Skip()
 	group := request.NewCreateAttendanceGroup("manager164",
 		"创建排班制考勤组",
 		attendance.TURN,
@@ -219,4 +220,149 @@ func TestDingTalk_CreateAttendanceGroup_TURN(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
 	assert.NotNil(t, res.AttendanceGroup.Name, "创建排班制考勤组")
+}
+
+func TestDingTalk_UpdateAttendanceGroup_TURN(t *testing.T) {
+	t.Skip()
+	group := request.NewCreateAttendanceGroup("manager164",
+		"创建排班制考勤组",
+		attendance.TURN,
+		[]request.AttendanceMember{request.NewAttendanceMember("manager164", "")}).
+		SetDefaultClassId(1197110225).
+		Build()
+
+	res, err := client.CreateAttendanceGroup(group)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+	assert.NotNil(t, res.AttendanceGroup.Name, "创建排班制考勤组")
+}
+
+func TestDingTalk_DeleteAttendanceGroup(t *testing.T) {
+	//t.Skip()
+	res, err := client.DeleteAttendanceGroup("manager164", "EBA6891DAA04268FB3BFB43E5DC1910D")
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+	assert.Equal(t, res.Result, "EBA6891DAA04268FB3BFB43E5DC1910D")
+}
+
+func TestDingTalk_IdToKeyAttendanceGroup(t *testing.T) {
+	res, err := client.IdToKeyAttendanceGroup("manager164", 1210435013)
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+	assert.Equal(t, res.Result, "EBA6891DAA04268FB3BFB43E5DC1910D")
+}
+func TestDingTalk_CreateAttendanceShift(t *testing.T) {
+	uid := "020628151124053635"
+	name := "早午班13"
+	shift := request.NewCreateAttendanceShift(uid,
+		name, []request.AttendanceShiftSection{
+			request.AttendanceShiftSection{
+				Times: []request.AttendanceShiftTime{
+					request.AttendanceShiftTime{
+						FreeCheck: true,
+						BeginMin:  0,
+						CheckType: "OffDuty",
+						Across:    0,
+						EndMin:    0,
+						CheckTime: "2024-06-07 12:30:00",
+					},
+					request.AttendanceShiftTime{
+						FreeCheck: true,
+						BeginMin:  0,
+						CheckType: "OnDuty",
+						Across:    0,
+						EndMin:    0,
+						CheckTime: "2024-06-07 15:50:00",
+					},
+				},
+			},
+		}).
+		SetOwner(uid).
+		SetId(1219930037).
+		Build()
+
+	res, err := client.CreateAttendanceShift(shift)
+	assert.Nil(t, err)
+	assert.Equal(t, res.AttendanceShift.Name, name)
+}
+
+func TestDingTalk_DeleteAttendanceShift(t *testing.T) {
+	res, err := client.DeleteAttendanceShift("manager164", 1212315041)
+	assert.Nil(t, err)
+	fmt.Println(res)
+}
+
+func TestDingTalk_UpdateAttendanceShiftPunches(t *testing.T) {
+	// IMPORTANT 修改成功以后节点id会发生变化
+	punches := []request.AttendanceShiftPunches{
+		{
+			Id:        937800001,
+			FreeCheck: true,
+		},
+		{
+			Id:        937800001,
+			FreeCheck: true,
+		},
+	}
+
+	shiftPunches := request.NewUpdateAttendanceShiftPunches("manager164", 1219930037, punches)
+	res, err := client.UpdateAttendanceShiftPunches(shiftPunches)
+	assert.Nil(t, err)
+	assert.Equal(t, res.Success, true)
+}
+
+func TestDingTalk_GetAttendanceShiftList(t *testing.T) {
+	res, err := client.GetAttendanceShiftList("manager164", 0)
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttendanceShiftDetail(t *testing.T) {
+	res, err := client.GetAttendanceShiftDetail("manager164", 1219930037)
+	fmt.Println(res)
+	assert.Nil(t, err)
+}
+
+func TestDingTalk_GetAttendanceListSchedule(t *testing.T) {
+	t.Skip()
+	res, err := client.GetAttendanceListSchedule("2024-06-07", 1, 10)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+	assert.Equal(t, res.AttendanceListSchedule.Schedules[0].UserID, "020628151124053635")
+	assert.Equal(t, res.AttendanceListSchedule.Schedules[0].ClassID, 1213915286)
+	assert.Equal(t, res.AttendanceListSchedule.Schedules[0].GroupID, 1197110225)
+}
+
+func TestDingTalk_GetAttendanceScheduleList(t *testing.T) {
+	list, err := client.GetAttendanceScheduleList("manager164", "020628151124053635", 1717658407000)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, list)
+}
+
+func TestDingTalk_GetAttendanceScheduleUsersList(t *testing.T) {
+	list, err := client.GetAttendanceScheduleUsersList("manager164", "020628151124053635,1315165650938287,285566344124169124,09285247331246086", 1717430400000, 1717516800000)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, list)
+}
+
+func TestDingTalk_UpdateAttendanceSchedule(t *testing.T) {
+	schedule := request.NewAttendanceSchedule(1213915286, 1717689600000, false, "020628151124053635")
+	req := request.NewUpdateAttendanceSchedule("manager164", 1197110225, []request.AttendanceSchedule{schedule})
+	res, err := client.UpdateAttendanceSchedule(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttendanceScheduleShift(t *testing.T) {
+
+	req := request.NewGetAttendanceScheduleShift("manager164", "020628151124053635,1315165650938287,285566344124169124,09285247331246086", 1717430400000, 1717506800000)
+	res, err := client.GetAttendanceScheduleShift(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
 }
