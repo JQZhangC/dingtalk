@@ -47,7 +47,7 @@ import (
 
 type DingTalk struct {
 	// 企业内部应用对应:AgentId，如果是应套件:SuiteId
-	//id int
+	id int
 
 	// 企业内部应用对应:AppKey，套件对应:SuiteKey
 	key string
