@@ -76,6 +76,11 @@ type DingTalk struct {
 
 type OptionFunc func(*DingTalk)
 
+func WithAgentId(agentId int) OptionFunc {
+	return func(dt *DingTalk) {
+		dt.id = agentId
+	}
+}
 func WithTicket(ticket string) OptionFunc {
 	return func(dt *DingTalk) {
 		dt.ticket = ticket
