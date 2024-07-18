@@ -23,8 +23,11 @@ import (
 	"go.uber.org/zap"
 )
 
-var client, _ = NewClient("dingkjy4w80esdwgjuyo",
-	"bDKa_nfJg3zYRsFrj-wTohTuoJCtxTEHaGmybYF9vgaVAZJOz-mICsLGStB288nW", WithLevel(zap.DebugLevel))
+//var client, _ = NewClient("dingkjy4w80esdwgjuyo",
+//	"bDKa_nfJg3zYRsFrj-wTohTuoJCtxTEHaGmybYF9vgaVAZJOz-mICsLGStB288nW", WithLevel(zap.DebugLevel))
+
+var client, _ = NewClient("ding5rz1g9eakvjg5bzb",
+	"OwOjDZg-exCUiD19wKdg1RJHcPspgM-GBTN5wHC80Bwy2Ca5zxriOTC1_gK_PKUE", WithLevel(zap.DebugLevel))
 
 var isv, _ = NewClient("suitegqebx814dt8immqw",
 	"AXjjwYhZ7Bwh1e8vlkg7pPQHUACwl8rSJWFma1taYMDLUjmIAtl9d9yAdTBg4K3m",

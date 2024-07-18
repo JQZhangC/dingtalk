@@ -108,9 +108,9 @@ func (cas *CreateAttendanceShiftBuilder) SetServiceId(serviceId int64) *CreateAt
 	return cas
 }
 
-func (cas *CreateAttendanceShiftBuilder) SetSetting(classId, seriousLateMinutes, absenteeismLateMinutes int, isFlexible bool, corpId, extras, tags, isDeleted string) *CreateAttendanceShiftBuilder {
+func (cas *CreateAttendanceShiftBuilder) SetSetting(classId *int, seriousLateMinutes, absenteeismLateMinutes int, isFlexible bool, corpId, extras, tags, isDeleted string) *CreateAttendanceShiftBuilder {
 	setting := cas.shift.AttendanceShift.Setting
-	setting.ClassId = &classId
+	setting.ClassId = classId
 	setting.IsFlexible = isFlexible
 	setting.CorpId = corpId
 	setting.IsDeleted = isDeleted

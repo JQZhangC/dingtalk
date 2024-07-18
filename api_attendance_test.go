@@ -279,7 +279,6 @@ func TestDingTalk_CreateAttendanceShift(t *testing.T) {
 			},
 		}).
 		SetOwner(uid).
-		SetId(1219930037).
 		Build()
 
 	res, err := client.CreateAttendanceShift(shift)
