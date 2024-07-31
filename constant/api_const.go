@@ -190,4 +190,17 @@ const (
 	GetAttendanceScheduleUsersListKey = "/topapi/attendance/schedule/listbyusers"      // 批量查询人员排班信息
 	UpdateAttendanceScheduleKey       = "/topapi/attendance/group/schedule/async"      // 排班制考勤组排班
 	GetAttendanceScheduleShiftKey     = "/topapi/attendance/schedule/shift/listbydays" // 批量查询成员排班概要信息
+
+	CreateLeavesTypes              = "/v1.0/attendance/leaves/types"            //添加假期规则
+	UpdateLeavesTypes              = "/v1.0/attendance/leaves/types"            //新假期规则
+	DeleteAttendanceVacationType   = "/topapi/attendance/vacation/type/delete"  //删除假期规则
+	InitAttendanceVacationQuota    = "/topapi/attendance/vacation/quota/init"   //初始化假期余额
+	UpdateAttendanceVacationQuota  = "/topapi/attendance/vacation/quota/update" //批量更新假期余额
+	GetAttendanceVacationTypeList  = "/topapi/attendance/vacation/type/list"    //查询假期规则列表
+	GetAttendanceVacationQuotaList = "/topapi/attendance/vacation/quota/list"   //查询假期余额
+	GetAttendanceVacationsRecords  = "/v1.0/attendance/vacations/records/query" //批量查询员工假期余额变更记录
+
+	GetAttColumns      = "/topapi/attendance/getattcolumns" //获取考勤报表列定义
+	GetAttColumnValues = "/topapi/attendance/getcolumnval"  //获取考勤报表列值
+
 )

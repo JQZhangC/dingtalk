@@ -21,6 +21,7 @@ import (
 	"github.com/zhaoyunxing92/dingtalk/v2/request"
 	"github.com/zhaoyunxing92/dingtalk/v2/response"
 	"net/http"
+	"net/url"
 )
 
 // GetAttendanceGroups 批量获取考勤组详情
@@ -132,4 +133,66 @@ func (ding *DingTalk) GetAttendanceScheduleShift(res *request.GetAttendanceSched
 func (ding *DingTalk) GetAttendanceListSchedule(workDate string, offset, size int) (rsp response.GetAttendanceListSchedule, err error) {
 	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceListScheduleKey, nil,
 		request.GetAttendanceListSchedule{workDate, offset, size}, &rsp)
+}
+
+func (ding *DingTalk) CreateLeavesTypes(opUserId string, res *request.CreateAttendanceLeavesTypes) (rsp response.CreateAttendanceLeavesTypes, err error) {
+	query := url.Values{}
+	query.Set("opUserId", opUserId)
+	return rsp, ding.Request(http.MethodPost, constant.CreateLeavesTypes, query, res, &rsp)
+}
+
+func (ding *DingTalk) UpdateLeavesTypes(opUserId string, res *request.UpdateAttendanceLeavesTypes) (rsp response.UpdateAttendanceLeavesTypes, err error) {
+	query := url.Values{}
+	query.Set("opUserId", opUserId)
+	return rsp, ding.Request(http.MethodPut, constant.UpdateLeavesTypes, query, res, &rsp)
+}
+
+func (ding *DingTalk) DeleteAttendanceVacationType(opUserId, leaveCode string) (rsp response.UpdateAttendanceLeavesTypes, err error) {
+	type Request struct {
+		OpUserId  string `json:"op_userid"`
+		LeaveCode string `json:"leave_code"`
+	}
+
+	res := &Request{
+		OpUserId:  opUserId,
+		LeaveCode: leaveCode,
+	}
+	return rsp, ding.Request(http.MethodPost, constant.DeleteAttendanceVacationType, nil, res, &rsp)
+}
+
+func (ding *DingTalk) InitAttendanceVacationQuota(res *request.InitAttendanceVacationQuota) (rsp response.AttendanceVacationQuotaInit, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.InitAttendanceVacationQuota, nil, res, &rsp)
+}
+
+func (ding *DingTalk) UpdateAttendanceVacationQuota(res *request.UpdateAttendanceVacationQuota) (rsp response.AttendanceVacationQuotaInit, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.UpdateAttendanceVacationQuota, nil, res, &rsp)
+}
+
+func (ding *DingTalk) GetAttendanceVacationTypeList(opUserId, vacationSource string) (rsp response.GetAttendanceVacationTypeList, err error) {
+	type Request struct {
+		OpUserId       string `json:"op_userid"`
+		VacationSource string `json:"vacation_source"`
+	}
+
+	res := &Request{
+		OpUserId:       opUserId,
+		VacationSource: vacationSource,
+	}
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceVacationTypeList, nil, res, &rsp)
+}
+
+func (ding *DingTalk) GetAttendanceVacationQuotaList(res *request.GetAttendanceVacationQuotaList) (rsp response.GetAttendanceVacationQuotaList, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceVacationQuotaList, nil, res, &rsp)
+}
+
+func (ding *DingTalk) GetAttendanceVacationsRecords(res *request.GetAttendanceVacationsRecords) (rsp response.GetAttendanceVacationsRecords, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetAttendanceVacationsRecords, nil, res, &rsp)
+}
+
+func (ding *DingTalk) GetAttColumns() (rsp response.GetAttColumns, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetAttColumns, nil, nil, &rsp)
+}
+
+func (ding *DingTalk) GetAttColumnValues(res *request.GetAttColumnValues) (rsp response.GetAttColumnValues, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetAttColumnValues, nil, res, &rsp)
 }

@@ -19,7 +19,9 @@ package dingtalk
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"testing"
+	"time"
 
 	"github.com/zhaoyunxing92/dingtalk/v2/constant/attendance"
 	"github.com/zhaoyunxing92/dingtalk/v2/request"
@@ -361,6 +363,162 @@ func TestDingTalk_GetAttendanceScheduleShift(t *testing.T) {
 
 	req := request.NewGetAttendanceScheduleShift("manager164", "020628151124053635,1315165650938287,285566344124169124,09285247331246086", 1717430400000, 1717506800000)
 	res, err := client.GetAttendanceScheduleShift(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_CreateLeavesTypes(t *testing.T) {
+	opUserId := "020628151124053635"
+	req := &request.CreateAttendanceLeavesTypes{
+		LeaveName:       "测试请假类型",
+		LeaveViewUnit:   "day",
+		BizType:         "general_leave",
+		NaturalDayLeave: false,
+		HoursInPerDay:   8,
+	}
+	res, err := client.CreateLeavesTypes(opUserId, req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_UpdateLeavesTypes(t *testing.T) {
+	opUserId := "020628151124053635"
+	req := &request.UpdateAttendanceLeavesTypes{
+		LeaveCode:       "d7cac244-195b-43ff-90a6-f7fbc744f58a",
+		LeaveViewUnit:   "halfDay",
+		BizType:         "general_leave",
+		NaturalDayLeave: false,
+		HoursInPerDay:   8,
+	}
+	res, err := client.UpdateLeavesTypes(opUserId, req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_DeleteAttendanceVacationType(t *testing.T) {
+	opUserId := "020628151124053635"
+	leaveCode := "760ae95f-4bde-44cd-b22e-785da72fd294" //
+	res, err := client.DeleteAttendanceVacationType(opUserId, leaveCode)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_AttendanceVacationQuotaInit(t *testing.T) {
+	now := time.Now()
+	endOfYear := time.Date(now.Year(), time.December, 31, 23, 59, 59, 0, now.Location())
+
+	req := &request.InitAttendanceVacationQuota{
+		LeaveQuotas: request.LeaveQuotas{
+			LeaveCode:       "d7cac244-195b-43ff-90a6-f7fbc744f58a",
+			StartTime:       now.UnixMilli(),
+			EndTime:         endOfYear.UnixMilli(),
+			QuotaNumPerDay:  1000, // 10天
+			QuotaNumPerHour: 8000, // 8小时一天，按小时为80小时
+			Reason:          "测试",
+			Userid:          "020628151124053635",
+			QuotaCycle:      strconv.Itoa(now.Year()),
+		},
+		OpUserid: "020628151124053635",
+	}
+	res, err := client.InitAttendanceVacationQuota(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_UpdateAttendanceVacationQuota(t *testing.T) {
+	now := time.Now()
+	endOfYear := time.Date(now.Year(), time.December, 31, 23, 59, 59, 0, now.Location())
+
+	req := &request.UpdateAttendanceVacationQuota{
+		LeaveQuotas: []request.LeaveQuotas{{
+			LeaveCode:       "d7cac244-195b-43ff-90a6-f7fbc744f58a",
+			StartTime:       now.UnixMilli(),
+			EndTime:         endOfYear.UnixMilli(),
+			QuotaNumPerDay:  1100, // 10天
+			QuotaNumPerHour: 8800, // 8小时一天，按小时为80小时
+			Reason:          "测试",
+			Userid:          "020628151124053635",
+			QuotaCycle:      strconv.Itoa(now.Year()),
+		},
+		},
+		OpUserid: "020628151124053635",
+	}
+	res, err := client.UpdateAttendanceVacationQuota(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttendanceVacationTypeList(t *testing.T) {
+	opUserId := "020628151124053635"
+	vacationSource := "all"
+	res, err := client.GetAttendanceVacationTypeList(opUserId, vacationSource)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttendanceVacationQuotaList(t *testing.T) {
+	//opUserId := "020628151124053635"
+	//vacationSource := "all"
+	req := &request.GetAttendanceVacationQuotaList{
+		LeaveCode: "d7cac244-195b-43ff-90a6-f7fbc744f58a",
+		OpUserId:  "020628151124053635",
+		UserIds:   "020628151124053635",
+		Offset:    0,
+		Size:      10,
+	}
+	res, err := client.GetAttendanceVacationQuotaList(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttendanceVacationsRecords(t *testing.T) {
+	//opUserId := "020628151124053635"
+	//vacationSource := "all"
+	req := &request.GetAttendanceVacationsRecords{
+		LeaveCode:  "d7cac244-195b-43ff-90a6-f7fbc744f58a",
+		OpUserId:   "020628151124053635",
+		UserIds:    []string{"020628151124053635"},
+		PageNumber: 0,
+		PageSize:   10,
+	}
+	res, err := client.GetAttendanceVacationsRecords(req)
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttColumns(t *testing.T) {
+	//opUserId := "020628151124053635"
+	//vacationSource := "all"
+
+	res, err := client.GetAttColumns()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetAttColumnValues(t *testing.T) {
+	fromDate := time.Date(time.Now().Year(), time.Now().Month(), 1, 0, 0, 0, 0, time.Local)
+	nextMonth := fromDate.AddDate(0, 1, 0) // 跳到下个月的第一天
+	nextMonth = nextMonth.AddDate(0, 0, -1)
+	toDate := time.Date(nextMonth.Year(), nextMonth.Month(), nextMonth.Day(), 23, 59, 59, 0, time.Local)
+
+	req := &request.GetAttColumnValues{
+		UserId:       "020628151124053635",
+		ColumnIdList: "1100933128,1100933133,1100933135,1100933136",
+		FromDate:     fromDate.Format(time.DateTime),
+		ToDate:       toDate.Format(time.DateTime),
+	}
+
+	res, err := client.GetAttColumnValues(req)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
