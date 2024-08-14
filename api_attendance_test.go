@@ -500,7 +500,7 @@ func TestDingTalk_GetAttColumns(t *testing.T) {
 	//vacationSource := "all"
 
 	res, err := client.GetAttColumns()
-
+	fmt.Printf("%v", res)
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
 }
@@ -513,7 +513,7 @@ func TestDingTalk_GetAttColumnValues(t *testing.T) {
 
 	req := &request.GetAttColumnValues{
 		UserId:       "020628151124053635",
-		ColumnIdList: "1100933128,1100933133,1100933135,1100933136",
+		ColumnIdList: "0,1100933128,1100933133,1100933135,1100933136",
 		FromDate:     fromDate.Format(time.DateTime),
 		ToDate:       toDate.Format(time.DateTime),
 	}
