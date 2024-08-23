@@ -196,3 +196,7 @@ func (ding *DingTalk) GetAttColumns() (rsp response.GetAttColumns, err error) {
 func (ding *DingTalk) GetAttColumnValues(res *request.GetAttColumnValues) (rsp response.GetAttColumnValues, err error) {
 	return rsp, ding.Request(http.MethodPost, constant.GetAttColumnValues, nil, res, &rsp)
 }
+
+func (ding *DingTalk) GetUpdateData(res *request.GetUpdateData) (rsp response.GetUpdateData, err error) {
+	return rsp, ding.Request(http.MethodPost, constant.GetUpdateData, nil, res, &rsp)
+}

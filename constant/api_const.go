@@ -202,5 +202,5 @@ const (
 
 	GetAttColumns      = "/topapi/attendance/getattcolumns" //获取考勤报表列定义
 	GetAttColumnValues = "/topapi/attendance/getcolumnval"  //获取考勤报表列值
-
+	GetUpdateData      = "/topapi/attendance/getupdatedata" //获取用户考勤数据
 )
