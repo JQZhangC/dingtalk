@@ -203,4 +203,9 @@ const (
 	GetAttColumns      = "/topapi/attendance/getattcolumns" //获取考勤报表列定义
 	GetAttColumnValues = "/topapi/attendance/getcolumnval"  //获取考勤报表列值
 	GetUpdateData      = "/topapi/attendance/getupdatedata" //获取用户考勤数据
+
+	GetAttendanceList        = "/attendance/list"                  //获取打卡结果
+	GetAttendanceLeaveStatus = "/topapi/attendance/getleavestatus" //查询请假状态
+
+	GetProcessInstances = "/v1.0/workflow/processInstances"
 )

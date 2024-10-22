@@ -17,6 +17,7 @@
 package dingtalk
 
 import (
+	"fmt"
 	"github.com/zhaoyunxing92/dingtalk/v2/constant"
 	"github.com/zhaoyunxing92/dingtalk/v2/request"
 	"github.com/zhaoyunxing92/dingtalk/v2/response"
@@ -199,4 +200,23 @@ func (ding *DingTalk) GetAttColumnValues(res *request.GetAttColumnValues) (rsp r
 
 func (ding *DingTalk) GetUpdateData(res *request.GetUpdateData) (rsp response.GetUpdateData, err error) {
 	return rsp, ding.Request(http.MethodPost, constant.GetUpdateData, nil, res, &rsp)
+}
+
+func (ding *DingTalk) GetAttendanceList(res *request.GetAttendanceList) (rsp response.GetAttendanceList, err error) {
+	err = ding.Request(http.MethodPost, constant.GetAttendanceList, nil, res, &rsp)
+	return rsp, err
+}
+
+func (ding *DingTalk) GetAttendanceLeaveStatus(res *request.GetAttendanceLeaveStatus) (rsp response.GetAttendanceLeaveStatus, err error) {
+	err = ding.Request(http.MethodPost, constant.GetAttendanceLeaveStatus, nil, res, &rsp)
+	return rsp, err
+}
+
+func (ding *DingTalk) GetProcessInstances(processInstanceId string) (rsp response.GetProcessInstances, err error) {
+	query := url.Values{
+		"processInstanceId": []string{processInstanceId},
+	}
+	urlStr := fmt.Sprintf("%s?processInstanceId=%s", constant.GetProcessInstances, processInstanceId)
+	err = ding.Request(http.MethodGet, urlStr, query, nil, &rsp)
+	return rsp, err
 }

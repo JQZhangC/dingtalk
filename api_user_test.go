@@ -85,7 +85,7 @@ func TestDingTalk_GetInactiveUser(t *testing.T) {
 }
 
 func TestDingTalk_GetUserIdByMobile(t *testing.T) {
-	req, err := client.GetUserIdByMobile(request.NewMobileGetUserId("18357154439"))
+	req, err := client.GetUserIdByMobile(request.NewMobileGetUserId("13586448889"))
 
 	assert.Nil(t, err)
 	assert.NotNil(t, req.Result.UserId)

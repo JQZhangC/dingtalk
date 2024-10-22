@@ -281,6 +281,7 @@ func TestDingTalk_CreateAttendanceShift(t *testing.T) {
 			},
 		}).
 		SetOwner(uid).
+		SetClassGroupName("哈哈哈哈").
 		Build()
 
 	res, err := client.CreateAttendanceShift(shift)
@@ -320,7 +321,7 @@ func TestDingTalk_GetAttendanceShiftList(t *testing.T) {
 }
 
 func TestDingTalk_GetAttendanceShiftDetail(t *testing.T) {
-	res, err := client.GetAttendanceShiftDetail("manager164", 1219930037)
+	res, err := client.GetAttendanceShiftDetail("manager164", 1230505877)
 	fmt.Println(res)
 	assert.Nil(t, err)
 }
@@ -520,6 +521,12 @@ func TestDingTalk_GetAttColumnValues(t *testing.T) {
 
 	res, err := client.GetAttColumnValues(req)
 
+	assert.Nil(t, err)
+	assert.NotNil(t, res)
+}
+
+func TestDingTalk_GetProcessInstances(t *testing.T) {
+	res, err := client.GetProcessInstances("QsrbHF28TE2G-JN2CTKxUQ08301729511916")
 	assert.Nil(t, err)
 	assert.NotNil(t, res)
 }
