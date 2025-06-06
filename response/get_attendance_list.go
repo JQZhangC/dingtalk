@@ -27,7 +27,7 @@ type GetAttendanceRecordResult struct {
 	BaseCheckTime  int64  `json:"baseCheckTime"`  //计算迟到和早退，基准时间
 	UserCheckTime  int64  `json:"userCheckTime"`  //实际打卡时间, 用户打卡时间的毫秒数
 	ProcInstId     string `json:"procInstId"`     //关联的审批实例ID，当该字段非空时，表示打卡记录与请假、加班等审批有关
-	ApproveId      string `json:"approveId"`      //关联的审批ID，当该字段非空时，表示打卡记录与请假、加班等审批有关
+	ApproveId      int64  `json:"approveId"`      //关联的审批ID，当该字段非空时，表示打卡记录与请假、加班等审批有关
 	LocationResult string `json:"locationResult"` //位置结果
 	TimeResult     string `json:"timeResult"`     //打卡结果
 	CheckType      string `json:"checkType"`      //考勤类型
