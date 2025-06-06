@@ -64,6 +64,7 @@ type DingTalk struct {
 	// 在开发者后台的基本信息 > 开发信息（旧版）页面获取微应用管理后台SSOSecret
 	ssoSecret string
 
+	logOutput io.Writer
 	// 日志级别
 	Level zapcore.Level
 
@@ -90,6 +91,12 @@ func WithTicket(ticket string) OptionFunc {
 func WithCorpId(corpId string) OptionFunc {
 	return func(dt *DingTalk) {
 		dt.corpId = corpId
+	}
+}
+
+func WithLogOutput(output io.Writer) OptionFunc {
+	return func(dt *DingTalk) {
+		dt.logOutput = output
 	}
 }
 
@@ -143,7 +150,7 @@ func NewClient(key, secret string, opts ...OptionFunc) (ding *DingTalk, err erro
 	}
 
 	ding.client = &http.Client{Timeout: 10 * time.Second}
-	ding.log = logger.GetLogger(ding.Level).Sugar()
+	ding.log = logger.GetOutputLogger(ding.Level, ding.logOutput).Sugar()
 
 	if err = ding.validate(); err != nil {
 		return nil, err

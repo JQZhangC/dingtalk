@@ -17,6 +17,7 @@
 package logger
 
 import (
+	"io"
 	"os"
 
 	"go.uber.org/zap"
@@ -43,6 +44,19 @@ func getEncoder() zapcore.Encoder {
 func GetLogger(level zapcore.Level) *zap.Logger {
 	encoder := getEncoder()
 	core := zapcore.NewCore(encoder, zapcore.AddSync(os.Stdout), level)
+
+	return zap.New(core, zap.AddCaller())
+}
+
+func GetOutputLogger(level zapcore.Level, output io.Writer) *zap.Logger {
+	encoder := getEncoder()
+
+	out := zapcore.AddSync(os.Stdout)
+	if output != nil {
+		out = zapcore.AddSync(output)
+	}
+
+	core := zapcore.NewCore(encoder, out, level)
 
 	return zap.New(core, zap.AddCaller())
 }
